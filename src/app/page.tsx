@@ -452,11 +452,8 @@ export default function Home() {
                 <p className="text-[#64748b] text-sm mb-4">
                   How our squad processed 50k rows of messy retail data in under 48 hours using AI scripts.
                 </p>
-                <div className="flex justify-between items-center text-sm">
+                <div className="text-sm">
                   <span className="text-[#64748b]">By Sarah A. (KSU)</span>
-                  <span className="text-[#10b981] font-semibold cursor-pointer hover:underline">
-                    Read More
-                  </span>
                 </div>
               </div>
             </div>
@@ -473,11 +470,8 @@ export default function Home() {
                 <p className="text-[#64748b] text-sm mb-4">
                   The difference between fetching coffee and solving real corporate backlog challenges.
                 </p>
-                <div className="flex justify-between items-center text-sm">
+                <div className="text-sm">
                   <span className="text-[#64748b]">By Faisal M. (KFUPM)</span>
-                  <span className="text-[#10b981] font-semibold cursor-pointer hover:underline">
-                    Read More
-                  </span>
                 </div>
               </div>
             </div>
