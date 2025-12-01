@@ -39,11 +39,11 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
       />
 
       {/* Modal Content */}
-      <div className="modal-content relative max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scaleIn">
+      <div className="modal-content relative max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl flex items-center justify-center text-[#64748b] hover:text-[#0f172a] hover:border-[#003366] transition-all z-20"
+          className="absolute top-4 right-4 w-9 h-9 bg-[#fafafa] border border-[#e5e5e5] flex items-center justify-center text-[#6b6b6b] z-20"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
