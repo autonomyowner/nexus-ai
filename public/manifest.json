@@ -1,0 +1,21 @@
+{
+  "name": "Nexus AI",
+  "short_name": "Nexus",
+  "description": "The Future of Saudi Workforce - AI-augmented student teams for consulting missions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#006C35",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
+}
