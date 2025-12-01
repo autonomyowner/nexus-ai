@@ -441,15 +441,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Article Card 1 */}
             <div className="feature-card overflow-hidden group">
-              <div className="h-48 bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] flex items-center justify-center relative">
-                <span className="absolute top-4 left-4 px-3 py-1 bg-[#10b981]/10 text-[#059669] text-xs font-bold rounded-full">
+              <div className="p-6">
+                <span className="inline-block px-3 py-1 bg-[#10b981]/10 text-[#059669] text-xs font-bold rounded-full mb-4">
                   Featured
                 </span>
-                <svg className="w-16 h-16 text-[#e2e8f0] group-hover:text-[#10b981]/20 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </div>
-              <div className="p-6">
                 <h5 className="font-semibold text-[#0f172a] text-lg mb-2">
                   Automating Data Cleanup with Python
                 </h5>
@@ -467,15 +462,10 @@ export default function Home() {
 
             {/* Article Card 2 */}
             <div className="feature-card overflow-hidden group">
-              <div className="h-48 bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] flex items-center justify-center relative">
-                <span className="absolute top-4 left-4 px-3 py-1 bg-[#003366]/10 text-[#003366] text-xs font-bold rounded-full">
+              <div className="p-6">
+                <span className="inline-block px-3 py-1 bg-[#003366]/10 text-[#003366] text-xs font-bold rounded-full mb-4">
                   Opinion
                 </span>
-                <svg className="w-16 h-16 text-[#e2e8f0] group-hover:text-[#003366]/20 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div className="p-6">
                 <h5 className="font-semibold text-[#0f172a] text-lg mb-2">
                   Why I Chose a Mission Over an Internship
                 </h5>
