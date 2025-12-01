@@ -61,6 +61,7 @@ export default function Home() {
               </div>
 
               {/* Animated Stats */}
+              <p className="text-[#64748b] text-sm mb-3 uppercase tracking-wider">Our Vision</p>
               <div className="grid grid-cols-3 gap-6 mb-10">
                 <div className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-[#10b981]">
