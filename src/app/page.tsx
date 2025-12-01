@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StudentModal from "@/components/StudentModal";
@@ -48,7 +48,7 @@ export default function Home() {
                 8-week consulting missions.
               </p>
 
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap gap-4 mb-10">
                 <button
                   onClick={() => setIsCompanyModalOpen(true)}
                   className="btn-primary"
@@ -58,6 +58,28 @@ export default function Home() {
                 <a href="#how-it-works" className="btn-secondary">
                   How it works
                 </a>
+              </div>
+
+              {/* Animated Stats */}
+              <div className="grid grid-cols-3 gap-6 mb-10">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-[#10b981]">
+                    <CountUp end={500} duration={2000} suffix="+" />
+                  </div>
+                  <p className="text-[#64748b] text-sm mt-1">Students</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-[#003366]">
+                    <CountUp end={50} duration={2000} suffix="+" />
+                  </div>
+                  <p className="text-[#64748b] text-sm mt-1">Companies</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-[#10b981]">
+                    <CountUp end={100} duration={2000} suffix="+" />
+                  </div>
+                  <p className="text-[#64748b] text-sm mt-1">Missions</p>
+                </div>
               </div>
 
               {/* Trust Badge */}
@@ -103,35 +125,9 @@ export default function Home() {
 
                     {/* Progress Items */}
                     <div className="space-y-5">
-                      <div className="p-4 bg-[#f8fafc] rounded-2xl border border-[#e2e8f0]">
-                        <div className="flex justify-between text-sm mb-3">
-                          <span className="text-[#64748b]">Market Analysis</span>
-                          <span className="text-[#10b981] font-semibold">100%</span>
-                        </div>
-                        <div className="h-2 bg-[#e2e8f0] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#10b981] rounded-full" style={{ width: "100%" }} />
-                        </div>
-                      </div>
-
-                      <div className="p-4 bg-[#f8fafc] rounded-2xl border border-[#e2e8f0]">
-                        <div className="flex justify-between text-sm mb-3">
-                          <span className="text-[#64748b]">Data Cleaning (AI Assist)</span>
-                          <span className="text-[#003366] font-semibold">85%</span>
-                        </div>
-                        <div className="h-2 bg-[#e2e8f0] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#003366] rounded-full" style={{ width: "85%" }} />
-                        </div>
-                      </div>
-
-                      <div className="p-4 bg-[#f8fafc] rounded-2xl border border-[#e2e8f0]">
-                        <div className="flex justify-between text-sm mb-3">
-                          <span className="text-[#64748b]">Report Generation</span>
-                          <span className="text-[#64748b] font-semibold">45%</span>
-                        </div>
-                        <div className="h-2 bg-[#e2e8f0] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#64748b] rounded-full" style={{ width: "45%" }} />
-                        </div>
-                      </div>
+                      <ProgressBar label="Market Analysis" percentage={100} color="#10b981" />
+                      <ProgressBar label="Data Cleaning (AI Assist)" percentage={85} color="#003366" />
+                      <ProgressBar label="Report Generation" percentage={45} color="#64748b" />
                     </div>
 
                     {/* Squad Info */}
@@ -445,15 +441,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Article Card 1 */}
             <div className="feature-card overflow-hidden group">
-              <div className="h-48 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
-                  alt="Students collaborating on data project"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute top-4 left-4 px-3 py-1 bg-[#10b981]/90 text-white text-xs font-bold rounded-full">
+              <div className="h-48 bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] flex items-center justify-center relative">
+                <span className="absolute top-4 left-4 px-3 py-1 bg-[#10b981]/10 text-[#059669] text-xs font-bold rounded-full">
                   Featured
                 </span>
+                <svg className="w-16 h-16 text-[#e2e8f0] group-hover:text-[#10b981]/20 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
               </div>
               <div className="p-6">
                 <h5 className="font-semibold text-[#0f172a] text-lg mb-2">
@@ -473,15 +467,13 @@ export default function Home() {
 
             {/* Article Card 2 */}
             <div className="feature-card overflow-hidden group">
-              <div className="h-48 relative overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop"
-                  alt="Student presenting ideas in meeting"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute top-4 left-4 px-3 py-1 bg-[#003366]/90 text-white text-xs font-bold rounded-full">
+              <div className="h-48 bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] flex items-center justify-center relative">
+                <span className="absolute top-4 left-4 px-3 py-1 bg-[#003366]/10 text-[#003366] text-xs font-bold rounded-full">
                   Opinion
                 </span>
+                <svg className="w-16 h-16 text-[#e2e8f0] group-hover:text-[#003366]/20 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
               </div>
               <div className="p-6">
                 <h5 className="font-semibold text-[#0f172a] text-lg mb-2">
@@ -557,6 +549,117 @@ function FeatureCard({
       </div>
       <h4 className="font-semibold text-xl text-[#0f172a] mb-3">{title}</h4>
       <p className="text-[#64748b]">{description}</p>
+    </div>
+  );
+}
+
+// CountUp Animation Component
+function CountUp({
+  end,
+  duration = 2000,
+  suffix = "",
+}: {
+  end: number;
+  duration?: number;
+  suffix?: string;
+}) {
+  const [count, setCount] = useState(0);
+  const countRef = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const startTime = Date.now();
+          const animate = () => {
+            const now = Date.now();
+            const progress = Math.min((now - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(easeOut * end));
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return (
+    <span ref={countRef}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
+
+// Animated Progress Bar Component
+function ProgressBar({
+  label,
+  percentage,
+  color,
+}: {
+  label: string;
+  percentage: number;
+  color: string;
+}) {
+  const [width, setWidth] = useState(0);
+  const [count, setCount] = useState(0);
+  const barRef = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const duration = 1500;
+          const startTime = Date.now();
+          const animate = () => {
+            const now = Date.now();
+            const progress = Math.min((now - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            setWidth(easeOut * percentage);
+            setCount(Math.floor(easeOut * percentage));
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (barRef.current) {
+      observer.observe(barRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [percentage]);
+
+  return (
+    <div ref={barRef} className="p-4 bg-[#f8fafc] rounded-2xl border border-[#e2e8f0]">
+      <div className="flex justify-between text-sm mb-3">
+        <span className="text-[#64748b]">{label}</span>
+        <span style={{ color }} className="font-semibold">{count}%</span>
+      </div>
+      <div className="h-2 bg-[#e2e8f0] rounded-full overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all"
+          style={{ width: `${width}%`, backgroundColor: color }}
+        />
+      </div>
     </div>
   );
 }
