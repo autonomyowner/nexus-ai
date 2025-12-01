@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Modal from "./Modal";
 
 interface ArticleModalProps {
@@ -8,9 +9,41 @@ interface ArticleModalProps {
 }
 
 export default function ArticleModal({ isOpen, onClose }: ArticleModalProps) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  const handleClose = () => {
+    setIsSubmitted(false);
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <div className="p-8">
+        {isSubmitted ? (
+          <div className="text-center py-12">
+            <div className="w-20 h-20 bg-[#00d4aa]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-[#00d4aa]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-display font-bold text-2xl text-white mb-3">Article Submitted!</h2>
+            <p className="text-[#94a3b8] mb-8 max-w-sm mx-auto">
+              Thank you for your submission to Nexus Journal. Our editorial team will review your article and get back to you within 5-7 business days.
+            </p>
+            <button
+              onClick={handleClose}
+              className="btn-primary"
+            >
+              <span>Close</span>
+            </button>
+          </div>
+        ) : (
+          <>
         {/* Header */}
         <div className="mb-8">
           <div className="badge-premium mb-4">
@@ -25,7 +58,7 @@ export default function ArticleModal({ isOpen, onClose }: ArticleModalProps) {
           </p>
         </div>
 
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
           {/* Section 1: Author Details */}
           <div>
             <div className="flex items-center gap-3 mb-6">
@@ -112,6 +145,8 @@ export default function ArticleModal({ isOpen, onClose }: ArticleModalProps) {
             </svg>
           </button>
         </form>
+          </>
+        )}
       </div>
     </Modal>
   );

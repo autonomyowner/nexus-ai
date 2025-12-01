@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Modal from "./Modal";
 
 interface CompanyModalProps {
@@ -8,9 +9,41 @@ interface CompanyModalProps {
 }
 
 export default function CompanyModal({ isOpen, onClose }: CompanyModalProps) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  const handleClose = () => {
+    setIsSubmitted(false);
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <div className="p-8">
+        {isSubmitted ? (
+          <div className="text-center py-12">
+            <div className="w-20 h-20 bg-[#d4a574]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-[#d4a574]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-display font-bold text-2xl text-white mb-3">Request Received!</h2>
+            <p className="text-[#94a3b8] mb-8 max-w-sm mx-auto">
+              Thank you for your interest in partnering with Nexus. Our team will contact you within 1-2 business days to schedule a consultation.
+            </p>
+            <button
+              onClick={handleClose}
+              className="w-full py-4 bg-gradient-to-r from-[#d4a574] to-[#00d4aa] text-[#0a0f1a] font-bold rounded-xl hover:opacity-90 transition-opacity"
+            >
+              <span>Close</span>
+            </button>
+          </div>
+        ) : (
+          <>
         {/* Header */}
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#d4a574]/10 border border-[#d4a574]/20 rounded-full text-[#d4a574] text-xs font-semibold mb-4">
@@ -25,7 +58,7 @@ export default function CompanyModal({ isOpen, onClose }: CompanyModalProps) {
           </p>
         </div>
 
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
           {/* Section 1: Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
@@ -121,6 +154,8 @@ export default function CompanyModal({ isOpen, onClose }: CompanyModalProps) {
             </svg>
           </button>
         </form>
+          </>
+        )}
       </div>
     </Modal>
   );
