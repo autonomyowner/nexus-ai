@@ -10,14 +10,67 @@ interface StudentModalProps {
 
 export default function StudentModal({ isOpen, onClose }: StudentModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Form state
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    linkedin: '',
+    university: '',
+    major: '',
+    graduation: '',
+    gpa: '',
+    interest: '',
+    motivation: '',
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'student', data: formData }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        setError('Failed to submit application. Please try again or contact us directly.');
+      }
+    } catch {
+      setError('Failed to submit application. Please try again or contact us directly.');
+    }
+
+    setIsLoading(false);
   };
 
   const handleClose = () => {
     setIsSubmitted(false);
+    setError(null);
+    setFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      linkedin: '',
+      university: '',
+      major: '',
+      graduation: '',
+      gpa: '',
+      interest: '',
+      motivation: '',
+    });
     onClose();
   };
 
@@ -59,6 +112,12 @@ export default function StudentModal({ isOpen, onClose }: StudentModalProps) {
               </p>
             </div>
 
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
             <form className="space-y-8" onSubmit={handleSubmit}>
               {/* Section 1: Personal Info */}
               <div>
@@ -71,19 +130,50 @@ export default function StudentModal({ isOpen, onClose }: StudentModalProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="form-label">Full Name</label>
-                    <input type="text" placeholder="Your Name" className="form-input" />
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="Your Name"
+                      className="form-input"
+                      required
+                    />
                   </div>
                   <div>
                     <label className="form-label">Email</label>
-                    <input type="email" placeholder="your@email.com" className="form-input" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="your@email.com"
+                      className="form-input"
+                      required
+                    />
                   </div>
                   <div>
                     <label className="form-label">Phone Number</label>
-                    <input type="tel" placeholder="+966..." className="form-input" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+966..."
+                      className="form-input"
+                      required
+                    />
                   </div>
                   <div>
                     <label className="form-label">LinkedIn Profile</label>
-                    <input type="url" placeholder="linkedin.com/in/..." className="form-input" />
+                    <input
+                      type="url"
+                      name="linkedin"
+                      value={formData.linkedin}
+                      onChange={handleInputChange}
+                      placeholder="linkedin.com/in/..."
+                      className="form-input"
+                    />
                   </div>
                 </div>
               </div>
@@ -99,34 +189,61 @@ export default function StudentModal({ isOpen, onClose }: StudentModalProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="form-label">University</label>
-                    <select className="form-select">
+                    <select
+                      name="university"
+                      value={formData.university}
+                      onChange={handleInputChange}
+                      className="form-select"
+                      required
+                    >
                       <option value="">Select...</option>
-                      <option>King Saud University (KSU)</option>
-                      <option>King Fahd University (KFUPM)</option>
-                      <option>King Abdulaziz University (KAU)</option>
-                      <option>Princess Nourah University (PNU)</option>
-                      <option>Imam Muhammad University (IMSIU)</option>
-                      <option>Other</option>
+                      <option value="King Saud University (KSU)">King Saud University (KSU)</option>
+                      <option value="King Fahd University (KFUPM)">King Fahd University (KFUPM)</option>
+                      <option value="King Abdulaziz University (KAU)">King Abdulaziz University (KAU)</option>
+                      <option value="Princess Nourah University (PNU)">Princess Nourah University (PNU)</option>
+                      <option value="Imam Muhammad University (IMSIU)">Imam Muhammad University (IMSIU)</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div>
                     <label className="form-label">Major / Field of Study</label>
-                    <input type="text" placeholder="e.g. Computer Science" className="form-input" />
+                    <input
+                      type="text"
+                      name="major"
+                      value={formData.major}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Computer Science"
+                      className="form-input"
+                      required
+                    />
                   </div>
                   <div>
                     <label className="form-label">Expected Graduation</label>
-                    <select className="form-select">
+                    <select
+                      name="graduation"
+                      value={formData.graduation}
+                      onChange={handleInputChange}
+                      className="form-select"
+                      required
+                    >
                       <option value="">Select...</option>
-                      <option>2025</option>
-                      <option>2026</option>
-                      <option>2027</option>
-                      <option>2028</option>
-                      <option>Already Graduated</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      <option value="2027">2027</option>
+                      <option value="2028">2028</option>
+                      <option value="Already Graduated">Already Graduated</option>
                     </select>
                   </div>
                   <div>
                     <label className="form-label">GPA (Optional)</label>
-                    <input type="text" placeholder="e.g. 4.5 / 5.0" className="form-input" />
+                    <input
+                      type="text"
+                      name="gpa"
+                      value={formData.gpa}
+                      onChange={handleInputChange}
+                      placeholder="e.g. 4.5 / 5.0"
+                      className="form-input"
+                    />
                   </div>
                 </div>
               </div>
@@ -142,31 +259,57 @@ export default function StudentModal({ isOpen, onClose }: StudentModalProps) {
                 <div className="space-y-4">
                   <div>
                     <label className="form-label">Areas of Interest</label>
-                    <select className="form-select">
+                    <select
+                      name="interest"
+                      value={formData.interest}
+                      onChange={handleInputChange}
+                      className="form-select"
+                      required
+                    >
                       <option value="">Select primary interest...</option>
-                      <option>Data Analysis & Python</option>
-                      <option>Market Research</option>
-                      <option>Product Strategy</option>
-                      <option>Software Development</option>
-                      <option>Business Consulting</option>
+                      <option value="Data Analysis & Python">Data Analysis & Python</option>
+                      <option value="Market Research">Market Research</option>
+                      <option value="Product Strategy">Product Strategy</option>
+                      <option value="Software Development">Software Development</option>
+                      <option value="Business Consulting">Business Consulting</option>
                     </select>
                   </div>
                   <div>
                     <label className="form-label">Why do you want to join Nexus?</label>
                     <textarea
+                      name="motivation"
+                      value={formData.motivation}
+                      onChange={handleInputChange}
                       rows={4}
                       placeholder="Tell us about your motivation and what you hope to gain..."
                       className="form-input resize-none"
+                      required
                     />
                   </div>
                 </div>
               </div>
 
-              <button type="submit" className="btn-primary w-full justify-center">
-                <span>Submit Application</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+              <button
+                type="submit"
+                className="btn-primary w-full justify-center"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Submit Application</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </>
+                )}
               </button>
             </form>
           </>
