@@ -47,14 +47,17 @@ export default function Home() {
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
                 <button
-                  onClick={() => setIsStudentModalOpen(true)}
+                  onClick={() => setIsCompanyModalOpen(true)}
                   className="btn-primary"
+                >
+                  Start a Mission
+                </button>
+                <button
+                  onClick={() => setIsStudentModalOpen(true)}
+                  className="btn-secondary"
                 >
                   For Students
                 </button>
-                <a href="#how-it-works" className="btn-secondary">
-                  How it works
-                </a>
               </div>
 
               {/* Stats - Static Numbers */}
